@@ -1,0 +1,73 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Book details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.Name
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Model.ImageURL" width="100%" alt="@Model.Name">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Description</p>
+                        <p class="card-text">
+                            <b>Publisher: </b>
+                            <a asp-controller="Publishers" asp-action="Details" asp-route-id="@Model.PublisherId">
+                                @Model.Publisher.Name
+                            </a>
+                        </p>
+                        <p class="card-text">
+                            <b>Author: </b>
+                            <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorId">
+                                @Model.Author.FullName
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.BookCategory</p>
+                        <p class="card-text"><b>Publication Date: </b>@Model.PublicationDate.ToString("dd MMM yy")</p>
+
+                        <p class="card-text">
+                            <b>Illustrators: </b>
+                            <hr />
+                            <div class="row">
+                                @foreach (var illustrator in Model.Illustrators_Books)
+                                {
+                                    <div class="column text-center">
+                                        <img class="border-info rounded-circle" src="@illustrator.Illustrator.ProfilePictureURL" style="max-width: 150px" />
+                                        <br />
+                                        <a asp-controller="Illustrators" asp-action="Details" asp-route-id="@illustrator.IllustratorId">@illustrator.Illustrator.FullName</a>
+                                    </div>
+                                }
+                            </div>
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Back to List
+                            </a>
+                            <a class="btn btn-success text-white  @((DateTime.Now < Model.PublicationDate) ? "disabled" : "")" 
+                               asp-controller="Orders" 
+                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

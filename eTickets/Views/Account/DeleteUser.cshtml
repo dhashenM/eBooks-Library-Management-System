@@ -1,0 +1,12 @@
+﻿@using eBooks.Data.ViewModels;
+
+<div class="row">
+    <div class="col-md-6 offset-3 alert alert-danger text-center">
+        <h2>Are you sure you want to delete this account?</h2>
+        <hr />
+        <div class="align-middle">
+            <a class="btn btn-danger text-white" asp-controller="Account" asp-action="UserDeleted">Yes </a> |
+            <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Users">No </a>
+        </div>
+    </div>
+</div>
